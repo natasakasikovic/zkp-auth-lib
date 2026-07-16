@@ -47,3 +47,24 @@ impl PublicKey {
         &self.0
     }
 }
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Commitment([u8; 32]);
+
+impl Commitment {
+    pub(crate) fn from_point(point: &RistrettoPoint) -> Self {
+        Self(point.compress().to_bytes())
+    }
+
+    pub(crate) fn point(&self) -> Option<RistrettoPoint> {
+        CompressedRistretto(self.0).decompress()
+    }
+
+    pub fn as_bytes(&self) -> &[u8; 32] {
+        &self.0
+    }
+}
+
+pub(crate) fn generator() -> RistrettoPoint {
+    RISTRETTO_BASEPOINT_POINT
+}
