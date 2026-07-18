@@ -29,7 +29,7 @@ pub fn verify_interactive(
         .ok_or(VerificationError::InvalidResponse)?;
 
     let left = response_scalar * generator();
-    let right = commitment_point - challenge * public_key_point;
+    let right = commitment_point + challenge * public_key_point;
 
     if left == right {
         Ok(())
