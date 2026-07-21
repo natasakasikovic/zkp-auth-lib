@@ -1,4 +1,4 @@
-use zkp_schnorr::VerificationError;
+use schnorr::VerificationError;
 
 #[derive(Debug, thiserror::Error, PartialEq, Eq)]
 pub enum AuthVerificationError {
