@@ -1,11 +1,11 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use rand_core::{CryptoRng, RngCore};
+use schnorr::{PublicKey, SchnorrProof, SecretKey, prove_non_interactive, verify_non_interactive};
 use serde::{Deserialize, Serialize};
-use schnorr::{prove_non_interactive, verify_non_interactive, PublicKey, SchnorrProof, SecretKey};
 
 use crate::{
-    context::{sha256_hex, AuthContext},
+    context::{AuthContext, sha256_hex},
     error::AuthVerificationError,
     replay::ReplayProtector,
 };

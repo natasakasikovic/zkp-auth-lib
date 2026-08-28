@@ -28,7 +28,11 @@ impl Transcript {
     }
 
     // derivation of the Fiat-Shamir challenge
-    pub(crate) fn challenge_scalar(&self, public_key: &PublicKey, commitment: &Commitment) -> Scalar {
+    pub(crate) fn challenge_scalar(
+        &self,
+        public_key: &PublicKey,
+        commitment: &Commitment,
+    ) -> Scalar {
         let mut hasher = Sha512::new();
         hasher.update(b"zkp-auth-schnorr-fiat-shamir-v1"); // domain separation
         hasher.update(&(self.label.len() as u64).to_le_bytes());

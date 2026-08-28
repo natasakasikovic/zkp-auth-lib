@@ -1,20 +1,10 @@
-use criterion::{
-    black_box,
-    criterion_group,
-    criterion_main,
-    Criterion,
-};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 
 use rand_core::OsRng;
 
 use auth::{
-    AuthContext,
-    ReplayProtector,
-    ReplayProtectorConfig,
-    SecretKey,
-    create_auth_proof,
-    current_unix_timestamp,
-    verify_auth_proof,
+    AuthContext, ReplayProtector, ReplayProtectorConfig, SecretKey, create_auth_proof,
+    current_unix_timestamp, verify_auth_proof,
 };
 fn bench_proof_generation(c: &mut Criterion) {
     let mut setup_rng = OsRng;
@@ -38,13 +28,7 @@ fn bench_proof_generation(c: &mut Criterion) {
                     timestamp,
                 )
             },
-            |context| {
-                black_box(create_auth_proof(
-                    &mut proof_rng,
-                    &secret_key,
-                    context,
-                ))
-            },
+            |context| black_box(create_auth_proof(&mut proof_rng, &secret_key, context)),
             criterion::BatchSize::SmallInput,
         )
     });
@@ -75,14 +59,9 @@ fn bench_proof_verification(c: &mut Criterion) {
                     timestamp,
                 );
 
-                let bundle = create_auth_proof(
-                    &mut rng,
-                    &secret_key,
-                    context,
-                );
+                let bundle = create_auth_proof(&mut rng, &secret_key, context);
 
-                let replay =
-                    ReplayProtector::new(ReplayProtectorConfig::default());
+                let replay = ReplayProtector::new(ReplayProtectorConfig::default());
 
                 (bundle, replay)
             },

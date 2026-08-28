@@ -1,6 +1,6 @@
 use crate::{
     fiat_shamir::Transcript,
-    group::{generator, Commitment, PublicKey},
+    group::{Commitment, PublicKey, generator},
     prover::SchnorrProof,
 };
 use curve25519_dalek::scalar::Scalar;
@@ -23,8 +23,12 @@ pub fn verify_interactive(
     challenge: Scalar,
     response: [u8; 32],
 ) -> Result<(), VerificationError> {
-    let public_key_point = public_key.point().ok_or(VerificationError::InvalidPublicKey)?;
-    let commitment_point = commitment.point().ok_or(VerificationError::InvalidCommitment)?;
+    let public_key_point = public_key
+        .point()
+        .ok_or(VerificationError::InvalidPublicKey)?;
+    let commitment_point = commitment
+        .point()
+        .ok_or(VerificationError::InvalidCommitment)?;
     let response_scalar = Option::<Scalar>::from(Scalar::from_canonical_bytes(response))
         .ok_or(VerificationError::InvalidResponse)?;
 

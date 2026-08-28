@@ -6,19 +6,8 @@ mod replay;
 pub use context::AuthContext;
 pub use error::AuthVerificationError;
 
-pub use proof::{
-    create_auth_proof,
-    current_unix_timestamp,
-    verify_auth_proof,
-    AuthProofBundle,
-};
+pub use proof::{AuthProofBundle, create_auth_proof, current_unix_timestamp, verify_auth_proof};
 
-pub use replay::{
-    ReplayProtector,
-    ReplayProtectorConfig,
-};
+pub use replay::{ReplayProtector, ReplayProtectorConfig};
 
-pub use schnorr::{
-    PublicKey,
-    SecretKey,
-};
+pub use schnorr::{PublicKey, SecretKey};

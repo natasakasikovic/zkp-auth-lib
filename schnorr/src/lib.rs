@@ -6,13 +6,6 @@ pub mod verifier;
 pub use fiat_shamir::Transcript;
 pub use group::{Commitment, PublicKey, SecretKey};
 pub use prover::{
-    generate_interactive_commitment,
-    prove_non_interactive,
-    ProverState,
-    SchnorrProof,
+    ProverState, SchnorrProof, generate_interactive_commitment, prove_non_interactive,
 };
-pub use verifier::{
-    verify_interactive,
-    verify_non_interactive,
-    VerificationError,
-};
+pub use verifier::{VerificationError, verify_interactive, verify_non_interactive};

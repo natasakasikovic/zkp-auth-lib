@@ -1,11 +1,6 @@
 use auth::{
-    AuthContext,
-    AuthVerificationError,
-    ReplayProtector,
-    ReplayProtectorConfig,
-    SecretKey,
-    create_auth_proof,
-    verify_auth_proof,
+    AuthContext, AuthVerificationError, ReplayProtector, ReplayProtectorConfig, SecretKey,
+    create_auth_proof, verify_auth_proof,
 };
 
 use rand_core::OsRng;
@@ -30,17 +25,19 @@ fn auth_proof_is_bound_to_request_context() {
     let proof = create_auth_proof(&mut rng, &secret, context.clone());
     let mut replay = ReplayProtector::new(ReplayProtectorConfig::default());
 
-    assert!(verify_auth_proof(
-        &proof,
-        &public_key,
-        "warehouse-service",
-        "POST",
-        "/reservations",
-        br#"{"product_id":"laptop","quantity":1}"#,
-        timestamp,
-        &mut replay,
-    )
-    .is_ok());
+    assert!(
+        verify_auth_proof(
+            &proof,
+            &public_key,
+            "warehouse-service",
+            "POST",
+            "/reservations",
+            br#"{"product_id":"laptop","quantity":1}"#,
+            timestamp,
+            &mut replay,
+        )
+        .is_ok()
+    );
 
     let mut replay = ReplayProtector::new(ReplayProtectorConfig::default());
 
@@ -79,17 +76,19 @@ fn auth_proof_rejects_replayed_nonce() {
     let proof = create_auth_proof(&mut rng, &secret, context);
     let mut replay = ReplayProtector::new(ReplayProtectorConfig::default());
 
-    assert!(verify_auth_proof(
-        &proof,
-        &public_key,
-        "payment-service",
-        "POST",
-        "/payments",
-        br#"{"amount":120000}"#,
-        timestamp,
-        &mut replay,
-    )
-    .is_ok());
+    assert!(
+        verify_auth_proof(
+            &proof,
+            &public_key,
+            "payment-service",
+            "POST",
+            "/payments",
+            br#"{"amount":120000}"#,
+            timestamp,
+            &mut replay,
+        )
+        .is_ok()
+    );
 
     assert_eq!(
         verify_auth_proof(

@@ -1,7 +1,7 @@
 use rand_core::{CryptoRng, RngCore};
+use schnorr::Transcript;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
-use schnorr::Transcript;
 
 // represents the authentication data associated with a specific HTTP request.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -43,7 +43,7 @@ impl AuthContext {
     // All authentication context fields contribute to the challenge, so modifying any field invalidates the existing proof.
     pub(crate) fn transcript(&self) -> Transcript {
         let mut transcript = Transcript::new(b"zkp-auth-schnorr-http-v1");
- 
+
         transcript.append_message(b"service_id", self.service_id.as_bytes());
         transcript.append_message(b"audience", self.audience.as_bytes());
         transcript.append_message(b"method", self.method.as_bytes());

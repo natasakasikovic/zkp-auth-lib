@@ -1,6 +1,6 @@
 use crate::{
     fiat_shamir::Transcript,
-    group::{generator, Commitment, PublicKey, SecretKey},
+    group::{Commitment, PublicKey, SecretKey, generator},
 };
 use curve25519_dalek::scalar::Scalar;
 use rand_core::{CryptoRng, RngCore};
